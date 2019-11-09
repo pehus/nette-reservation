@@ -1,0 +1,44 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+extensions:
+	console: Kdyby\Console\DI\ConsoleExtension
+	events: Kdyby\Events\DI\EventsExtension
+	annotations: Kdyby\Annotations\DI\AnnotationsExtension
+	doctrine: Kdyby\Doctrine\DI\OrmExtension
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=reservation'
+	user: 'root'
+	password: ''
+
+doctrine:
+	user: root
+	password: ''
+	dbname: reservation
+	host: localhost
+	metadata:
+		App: %appDir%
+
+
+services:
+
+	- App\Model\Facades\ReservationFacade
+	- App\Model\Facades\PlaceFacade
+
+	#- App\Forms\FormFactory
+	#- App\Forms\SignInFormFactory
+	#- App\Forms\SignUpFormFactory
+	router: App\RouterFactory::createRouter

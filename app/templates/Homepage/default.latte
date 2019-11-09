@@ -1,0 +1,9 @@
+{block content}
+    {control places}
+    <p>
+        {$date|date:'d.m.Y'} <a href={link Homepage:default, page => $prev}>prev</a> | <a href="{link Homepage:default, page => $next}">next</a>
+    </p>
+{/block}
+
+{block scripts}{/block}
+{block head}{/block}

@@ -1,0 +1,20 @@
+.reservation {
+    border-color: #fff;
+    border: 1px;
+}
+
+.occupied {
+    background-color: red;
+    text-align: center;
+    padding: 5px;
+}
+
+.free {
+    background-color: green;
+    text-align: center;
+    padding: 5px;
+}
+
+.free a, .occupied a {
+    color: #fff;
+}
