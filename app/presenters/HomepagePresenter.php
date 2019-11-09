@@ -5,6 +5,7 @@ namespace App\Presenters;
 use App\Model\Facades;
 use Nette\Utils\DateTime;
 use App\Forms;
+use App\Components;
 
 final class HomepagePresenter extends BasePresenter
 {
@@ -35,7 +36,7 @@ final class HomepagePresenter extends BasePresenter
     /**
      * render default
      */
-    public function renderDefault() : void
+    public function renderDefault(): void
     {
         $pagination = $page = $this->pagination();
 
@@ -48,7 +49,7 @@ final class HomepagePresenter extends BasePresenter
      * pagination
      * @return array
      */
-    private function pagination() : array
+    private function pagination(): array
     {
         $page = $this->getParameter('page');   
   
@@ -87,7 +88,7 @@ final class HomepagePresenter extends BasePresenter
      * @param int $page
      * @return \Nette\Utils\DateTime
      */
-    private function selectedDate($next, $page) : DateTime
+    private function selectedDate($next, $page): DateTime
     {        
         $date = new DateTime();
         
@@ -101,9 +102,42 @@ final class HomepagePresenter extends BasePresenter
     
     /**
      * component cube selected tips form
+     * @param Facades\PlaceFacade
+     * @param Facades\ReservationFacade
+     * @param Forms\ReservationFormFactory
      */
-    protected function createComponentPlaces() : \App\Components\Place\PlaceControl
+    protected function createComponentPlaces(): Components\Place\PlaceControl
     {
-        return new \App\Components\Place\PlaceControl($this->placeFacade, $this->reservationFormFactory);
+        return new Components\Place\PlaceControl($this->placeFacade, $this->reservationFacade, $this->reservationFormFactory);
+    }
+    
+    /**
+     * create component reservation form
+     * @return \Nette\Application\UI\Form
+     * @throws Exception
+     */
+    protected function createComponentReservationForm(): \Nette\Application\UI\Form
+    {
+        $control = $this->reservationFormFactory->create();
+        $control->onSuccess[] = function (\Nette\Application\UI\Form $form, $values) {
+                       
+            try 
+            {          
+                $dateFrom = DateTime::createFromFormat('d.m.Y', $values->date_from);
+                $dateTo = DateTime::createFromFormat('d.m.Y', $values->date_to);
+                
+                $this->reservationFacade->create($dateFrom, $dateTo, $values->plate_number, $values->place);
+                $this->redirect('Homepage');
+                $this->flashMessage('Reservation was added');
+                
+            } 
+            catch (Exception $exc) 
+            {
+                Debugger::log($exc);
+                throw new Exception('create reservation', $exc);
+            }
+        };
+        
+        return $control;
     }
 }

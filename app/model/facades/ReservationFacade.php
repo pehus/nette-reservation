@@ -55,10 +55,10 @@ class ReservationFacade
         $this->entityManager->persist($reservation);
         
         $reservation
-                ->setPlateNumber($plateNumber)                
-                ->setDatetimeFrom($from)
-                ->setPlace($place)
-                ->setDatetimeTo($to);
+            ->setPlateNumber($plateNumber)                
+            ->setDatetimeFrom($from)
+            ->setPlace($place)
+            ->setDatetimeTo($to);
         
         $this->entityManager->flush();
     }

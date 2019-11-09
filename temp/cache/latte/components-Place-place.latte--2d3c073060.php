@@ -18,49 +18,23 @@ class Template2d3c073060 extends Latte\Runtime\Template
 		foreach ($places as $key => $place) {
 ?>
             <td class="free">
-                <a href="#" data-toggle="modal" data-target="#modal-<?php echo LR\Filters::escapeHtmlAttr($place) /* line 6 */ ?>"><?php
+                <a href="#" class="place" data-toggle="modal" data-target="#modal" data-place="<?php echo LR\Filters::escapeHtmlAttr($place) /* line 6 */ ?>"><?php
 			echo LR\Filters::escapeHtmlText($place) /* line 6 */ ?></a>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="modal-<?php echo LR\Filters::escapeHtmlAttr($place) /* line 9 */ ?>" tabindex="-1" role="dialog" aria-labelledby="modal-<?php
-			echo LR\Filters::escapeHtmlAttr($place) /* line 9 */ ?>" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">place <?php echo LR\Filters::escapeHtmlText($place) /* line 13 */ ?></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-<?php
-			/* line 19 */ $_tmp = $this->global->uiControl->getComponent("reservationForm");
-			if ($_tmp instanceof Nette\Application\UI\IRenderable) $_tmp->redrawControl(null, false);
-			$_tmp->render();
-?>
-                      </div>
-                      <div class="modal-footer">
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
 <?php
 			if ($counter >= 20) {
 ?>
-                    </tr>
+            </tr>
 <?php
 				$counter = 0;
 			}
 ?>
-            </td>
+    </td>
 <?php
 			$counter++;
 			$iterations++;
 		}
 ?>
-    <tr>            
+<tr>            
 </table><?php
 		return get_defined_vars();
 	}

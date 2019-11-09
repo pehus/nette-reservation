@@ -3,6 +3,47 @@
     <p>
         {$date|date:'d.m.Y'} <a href={link Homepage:default, page => $prev}>prev</a> | <a href="{link Homepage:default, page => $next}">next</a>
     </p>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">place</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {*control reservationForm*}
+                    
+                    <form n:name=reservationForm>
+                        <input n:name=place />
+                        
+                        <div class="form-group">
+                            <input n:name=plate_number class="form-control" placeholder="Plate Number">
+                        </div>
+                        
+                        <div class="input-daterange input-group" id="datepicker">
+                            <input type="text" class="input-sm form-control" n:name=date_from />
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="input-sm form-control" n:name=date_to />
+                        </div>
+                          
+                        <br />
+                        
+                        <div class="form-group">
+                            <input n:name=send class="btn btn-primary mb-2">
+                        </div>
+                    </form>
+                    
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
 {/block}
 
 {block scripts}{/block}
