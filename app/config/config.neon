@@ -38,7 +38,7 @@ services:
 	- App\Model\Facades\ReservationFacade
 	- App\Model\Facades\PlaceFacade
 
-	#- App\Forms\FormFactory
-	#- App\Forms\SignInFormFactory
+	- App\Forms\FormFactory
+	- App\Forms\ReservationFormFactory
 	#- App\Forms\SignUpFormFactory
 	router: App\RouterFactory::createRouter

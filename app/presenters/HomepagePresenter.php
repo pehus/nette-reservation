@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use App\Model\Facades;
 use Nette\Utils\DateTime;
+use App\Forms;
 
 final class HomepagePresenter extends BasePresenter
 {
@@ -24,6 +25,12 @@ final class HomepagePresenter extends BasePresenter
      * @var Facades\PlaceFacade
      */
     public $placeFacade;
+    
+    /**
+     * @inject
+     * @var Forms\ReservationFormFactory
+     */
+    public $reservationFormFactory;
     
     /**
      * render default
@@ -97,6 +104,6 @@ final class HomepagePresenter extends BasePresenter
      */
     protected function createComponentPlaces() : \App\Components\Place\PlaceControl
     {
-        return new \App\Components\Place\PlaceControl($this->placeFacade);
+        return new \App\Components\Place\PlaceControl($this->placeFacade, $this->reservationFormFactory);
     }
 }
