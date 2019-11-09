@@ -17,16 +17,10 @@ class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-
-    /**
-     * timestamp
-     * @ORM\Column(type="datetime")
-     */
-    public $timestamp;
-    
+   
     /**
      * place
-     * @ORM\Column(type="int") 
+     * @ORM\Column(type="integer") 
      */
     protected $place;
     
@@ -84,10 +78,10 @@ class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
     
     /**
      * set place
-     * @param int $place
+     * @param integer $place
      * @return $this
      */
-    public function setPlace(int $place)
+    public function setPlace($place)
     {
         $this->place = $place;
         return $this;

@@ -36,7 +36,7 @@ class ReservationFacade
      * get all reservations
      * @return array
      */
-    public function getReservations()
+    public function getReservations(): array
     {
         $em = $this->entityManager->getRepository(Reservation::class);
         return $em->findAll();        
@@ -49,7 +49,7 @@ class ReservationFacade
      * @param string $plateNumber
      * @param integer $place
      */
-    public function create($from, $to, $plateNumber, $place) : void
+    public function create($from, $to, $plateNumber, $place): void
     {
         $reservation = new Reservation();
         $this->entityManager->persist($reservation);
@@ -67,7 +67,7 @@ class ReservationFacade
      * delete reservation
      * @param int $id
      */
-    public function delete($id)
+    public function delete($id): void
     {
         $reservation = $this->entityManager->find(Reservation::class, $id);
         $this->entityManager->remove($reservation);
@@ -81,7 +81,7 @@ class ReservationFacade
      * @param type $to
      * @param type $plateNumber
      */
-    public function edit($id, $from, $to, $plateNumber) : void
+    public function edit($id, $from, $to, $plateNumber): void
     {
         $reservation = $this->entityManager->getReference(Reservation::class, $id);
         $reservation->setPlateNumber($plateNumber);

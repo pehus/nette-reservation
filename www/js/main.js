@@ -16,6 +16,7 @@ var sd = new Date(), ed = new Date();
     $('table.reservation a.place').on('click', function () {
        var id = $(this).data('place');
        $('input[name=place]').val(id);
+       $('span.place-number').html(id);
     });
 
 });
