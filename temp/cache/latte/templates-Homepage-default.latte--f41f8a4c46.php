@@ -82,21 +82,15 @@ class Templatef41f8a4c46 extends Latte\Runtime\Template
 		'placeholder' => NULL,
 		))->attributes() ?>>
                         </div>
-                        
+                                                
                         <div class="input-daterange input-group" id="datepicker">
-                            <input type="text" class="input-sm form-control"<?php
-		$_input = end($this->global->formsStack)["date_from"];
-		echo $_input->getControlPart()->addAttributes(array (
-		'type' => NULL,
-		'class' => NULL,
-		))->attributes() ?>>
+                            <input<?php
+		$_input = end($this->global->formsStack)["start"];
+		echo $_input->getControlPart()->attributes() ?>>
                             <span class="input-group-addon">to</span>
-                            <input type="text" class="input-sm form-control"<?php
-		$_input = end($this->global->formsStack)["date_to"];
-		echo $_input->getControlPart()->addAttributes(array (
-		'type' => NULL,
-		'class' => NULL,
-		))->attributes() ?>>
+                            <input<?php
+		$_input = end($this->global->formsStack)["end"];
+		echo $_input->getControlPart()->attributes() ?>>
                         </div>
                           
                         <br>

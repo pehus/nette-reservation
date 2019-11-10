@@ -6,12 +6,17 @@ class PlaceFacade
 {
     const PLACES = 240;
 
-    public function getPlaces($date = null)
+    /**
+     * get places
+     * @param type $date
+     * @return array
+     */
+    public function getPlaces($date = null): array
     {
         return $this->places();
     }
     
-    private function places()
+    private function places(): array
     {
         $places = [];
         for($i = 1; $i <= self::PLACES; $i++)
@@ -20,6 +25,11 @@ class PlaceFacade
         }
         
         return $places;
+    }
+    
+    public function isFree($place, $date_from, $date_to)
+    {
+        
     }
     
 }

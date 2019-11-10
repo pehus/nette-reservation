@@ -6,6 +6,7 @@ use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
 use App\Forms;
+use Nette\Utils\DateTime;
 
 
 final class ReservationFormFactory
@@ -34,13 +35,13 @@ final class ReservationFormFactory
         $form->addText('plate_number', 'Plate Code:')
                 ->setRequired('Please enter your plate code.');
 
-        $form->addText('date_from', 'Date from:')
-                ->setAttribute('data-provide', 'datepicker')
+        $form->addText('start', 'Date from:')
+                ->setAttribute('class', 'input-sm form-control')
                 ->setAttribute('readonly')
                 ->setRequired('Please enter date from.');
 
-        $form->addText('date_to', 'Date to:')
-                ->setAttribute('data-provide', 'datepicker')
+        $form->addText('end', 'Date to:')
+                ->setAttribute('class', 'input-sm form-control')
                 ->setAttribute('readonly')
                 ->setRequired('Please enter date to.');
 
@@ -53,14 +54,14 @@ final class ReservationFormFactory
                 throw new Nette\Neon\Exception('Bad place');
             }
             
-            if(!$values->date_from instanceof Nette\Utils\DateTime)
+            if(!DateTime::createFromFormat('d.m.Y', $values->start) instanceof Nette\Utils\DateTime)
             {
-                //throw new Nette\Neon\Exception('Bad format date from');
+                throw new Nette\Neon\Exception('Bad format date from');
             }
             
-            if(!$values->date_to instanceof Nette\Utils\DateTime)
+            if(!DateTime::createFromFormat('d.m.Y', $values->end) instanceof Nette\Utils\DateTime)
             {
-                //throw new Nette\Neon\Exception('Bad format date to');
+                throw new Nette\Neon\Exception('Bad format date to');
             }
             
         };

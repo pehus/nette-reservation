@@ -1,16 +1,10 @@
 $(function(){
 
-var sd = new Date(), ed = new Date();
-    $('input[name=date_from]').datepicker({
+    $('.input-daterange').datepicker({
+        locale:'cs',
         format: 'dd.mm.yyyy',
-        defaultDate: sd, 
-        maxDate: ed
-    });
-    
-    $('input[name=date_to]').datepicker({
-        format: 'dd.mm.yyyy',
-        defaultDate: sd, 
-        maxDate: ed
+        startDate:  new Date(),
+        todayHighlight: true
     });
 
     $('table.reservation a.place').on('click', function () {

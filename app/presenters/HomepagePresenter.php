@@ -123,12 +123,12 @@ final class HomepagePresenter extends BasePresenter
                        
             try 
             {          
-                $dateFrom = DateTime::createFromFormat('d.m.Y', $values->date_from);
-                $dateTo = DateTime::createFromFormat('d.m.Y', $values->date_to);
+                $dateFrom = DateTime::createFromFormat('d.m.Y', $values->start);
+                $dateTo = DateTime::createFromFormat('d.m.Y', $values->end);
 
                 $this->reservationFacade->create($dateFrom, $dateTo, $values->plate_number, (int)$values->place);
                 $this->flashMessage('Reservation was added');
-                $this->redirect('//Homepage:default');
+                $this->redirect('Homepage:');
             } 
             catch (Exception $exc) 
             {

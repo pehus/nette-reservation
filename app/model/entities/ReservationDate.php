@@ -5,10 +5,10 @@ namespace App\Model\Entities;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="reservation")
+ * @ORM\Table(name="reservation_date")
  * @ORM\Entity
  */
-class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
+class ReservationDate extends \Kdyby\Doctrine\Entities\BaseEntity
 {
     /**
      * reservation id
@@ -17,24 +17,6 @@ class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
      * @ORM\GeneratedValue
      */
     protected $id;
-   
-    /**
-     * place
-     * @ORM\Column(type="integer") 
-     */
-    protected $place;
-    
-    /**
-     * plate number
-     * @ORM\Column(type="string")
-     */
-    protected $plate_number;
-    
-    /**
-     * @ManyToOne(targetEntity="ReservationDate")
-     * @JoinColumn(name="reservation_id", referencedColumnName="id")
-     */
-    protected $dates;
     
     /**
      * datetime from
@@ -47,19 +29,7 @@ class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
      * @ORM\Column(type="datetime")
      */
     protected $datetime_to;
-    
-
-    /**
-     * set plate number
-     * @param string $plate_number
-     * @return $this
-     */
-    public function setPlateNumber(string $plate_number)
-    {
-        $this->plate_number = $plate_number;
-        return $this;
-    }
-    
+        
     /**
      * set datetime from
      * @param Nette\Utils\DateTime $datetime_from
@@ -79,17 +49,6 @@ class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
     public function setDatetimeTo($datetime_to)
     {
         $this->datetime_to = $datetime_to;
-        return $this;
-    }
-    
-    /**
-     * set place
-     * @param integer $place
-     * @return $this
-     */
-    public function setPlace($place)
-    {
-        $this->place = $place;
         return $this;
     }
 }
