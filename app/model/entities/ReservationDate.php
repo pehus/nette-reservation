@@ -10,45 +10,45 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ReservationDate extends \Kdyby\Doctrine\Entities\BaseEntity
 {
+
     /**
-     * reservation id
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Reservation")
+     * @ORM\JoinColumn(name="reservation_id", referencedColumnName="id")
+     */
+    protected $reservationId;
     
     /**
-     * datetime from
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
-    protected $datetime_from;
+    protected $date;
     
     /**
-     * datetime to
-     * @ORM\Column(type="datetime")
-     */
-    protected $datetime_to;
-        
-    /**
-     * set datetime from
-     * @param Nette\Utils\DateTime $datetime_from
+     * set reservation id
+     * @param integer $reservationId
      * @return $this
-     */    
-    public function setDatetimeFrom($datetime_from)
+     */
+    public function setReservationId($reservationId)
     {
-        $this->datetime_from = $datetime_from;
+        $this->reservationId = $reservationId;
         return $this;
     }
     
     /**
-     * set datetime to
-     * @param Nette\Utils\DateTime $datetime_to
+     * set date
+     * @param Nette\Utils\DateTime $date
      * @return $this
      */
-    public function setDatetimeTo($datetime_to)
+    public function setDate($date)
     {
-        $this->datetime_to = $datetime_to;
+        $this->date = $date;
         return $this;
     }
 }
