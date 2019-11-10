@@ -11,74 +11,30 @@ use Doctrine\ORM\Mapping as ORM;
 class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
 {
     /**
-     * reservation id
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
     protected $id;
-   
+
     /**
-     * place
-     * @ORM\Column(type="integer") 
+     * @ORM\Column(name="plate_number", type="string")
+     */
+    protected $plateNumber;
+    
+    /**
+     * @ORM\Column(name="place", type="integer")
      */
     protected $place;
     
     /**
-     * plate number
-     * @ORM\Column(type="string")
-     */
-    protected $plate_number;
-    
-    /**
-     * @ManyToOne(targetEntity="ReservationDate")
-     * @JoinColumn(name="reservation_id", referencedColumnName="id")
-     */
-    protected $dates;
-    
-    /**
-     * datetime from
-     * @ORM\Column(type="datetime")
-     */
-    protected $datetime_from;
-    
-    /**
-     * datetime to
-     * @ORM\Column(type="datetime")
-     */
-    protected $datetime_to;
-    
-
-    /**
      * set plate number
-     * @param string $plate_number
+     * @param string $plateNumber
      * @return $this
      */
-    public function setPlateNumber(string $plate_number)
+    public function setPlateNumber($plateNumber)
     {
-        $this->plate_number = $plate_number;
-        return $this;
-    }
-    
-    /**
-     * set datetime from
-     * @param Nette\Utils\DateTime $datetime_from
-     * @return $this
-     */    
-    public function setDatetimeFrom($datetime_from)
-    {
-        $this->datetime_from = $datetime_from;
-        return $this;
-    }
-    
-    /**
-     * set datetime to
-     * @param Nette\Utils\DateTime $datetime_to
-     * @return $this
-     */
-    public function setDatetimeTo($datetime_to)
-    {
-        $this->datetime_to = $datetime_to;
+        $this->plateNumber = $plateNumber;
         return $this;
     }
     
@@ -91,5 +47,14 @@ class Reservation extends \Kdyby\Doctrine\Entities\BaseEntity
     {
         $this->place = $place;
         return $this;
+    }
+    
+    /**
+     * get id reservation
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
