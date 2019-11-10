@@ -3,7 +3,7 @@
 namespace App\Model\Facades;
 
 use Kdyby\Doctrine\EntityManager;
-use App\Model\Entities\Reservation;
+use App\Model\Entities;
 use Nette\Utils\DateTime;
 
 class ReservationFacade
@@ -50,17 +50,32 @@ class ReservationFacade
      * @param integer $place
      */
     public function create($from, $to, $plateNumber, $place): void
-    {
-        $reservation = new Reservation();
-        $this->entityManager->persist($reservation);
-        
-        $reservation
-            ->setPlateNumber($plateNumber)                
-            ->setDatetimeFrom($from)
-            ->setPlace($place)
-            ->setDatetimeTo($to);
-        
-        $this->entityManager->flush();
+    {       
+        try 
+        {
+            $reservation = new Entities\Reservation();
+                $reservation
+                    ->setPlace($place)
+                    ->setPlateNumber($plateNumber);
+                $this->entityManager->persist($reservation);
+             $this->entityManager->flush();
+            
+            $days = $from->diff($to)->days;
+            for($i = 0; $i <= $days; $i++)
+            {
+                $reservationDate = new Entities\ReservationDate();
+                $reservationDate
+                        ->setDate($from->modifyClone("$i day"))
+                        ->setReservationId($reservation->getId());
+                $this->entityManager->persist($reservationDate);
+            }
+            
+            $this->entityManager->flush();
+        } 
+        catch (Exception $exc) 
+        {
+            throw new Exception('create reservation', $exc);
+        }
     }
     
     /**
@@ -75,7 +90,7 @@ class ReservationFacade
     }
     
     /**
-     * 
+     * edit reservation
      * @param type $id
      * @param type $from
      * @param type $to
@@ -83,6 +98,7 @@ class ReservationFacade
      */
     public function edit($id, $from, $to, $plateNumber): void
     {
+        //@todo:
         $reservation = $this->entityManager->getReference(Reservation::class, $id);
         $reservation->setPlateNumber($plateNumber);
         $this->entityManager->flush();
