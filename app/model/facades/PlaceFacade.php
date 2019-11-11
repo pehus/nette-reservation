@@ -83,13 +83,13 @@ class PlaceFacade
             ->from(Entities\ReservationDate::class, 'reservation_date')
             ->innerJoin(Entities\Reservation::class, 'reservation')
             ->where('reservation_date.date BETWEEN :date_from AND :date_to')
-            ->andWhere('reservation = :place')
+            ->andWhere('reservation.place = :place')
             ->setParameters([
                 'date_from' => $date_from->format('Y-m-d'),
                 'date_to' => $date_to->format('Y-m-d'), 
                 'place' => $place
             ]);
-        
+               
         if($qb->getQuery()->getResult())
         {
             return false;

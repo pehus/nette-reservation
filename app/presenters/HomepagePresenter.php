@@ -129,13 +129,22 @@ final class HomepagePresenter extends BasePresenter
         $control->onSuccess[] = function (\Nette\Application\UI\Form $form, $values) {
                        
             try 
-            {          
+            {      
                 $dateFrom = DateTime::createFromFormat('d.m.Y', $values->start);
                 $dateTo = DateTime::createFromFormat('d.m.Y', $values->end);
-
-                $this->reservationFacade->create($dateFrom, $dateTo, $values->plate_number, (int)$values->place);
-                $this->flashMessage('Reservation was added');
-                $this->redirect('Homepage:');
+                
+                $checkIsFree = $this->placeFacade->isFree($values->place, $dateFrom, $dateTo);            
+                if($checkIsFree)
+                {
+                    $this->reservationFacade->create($dateFrom, $dateTo, $values->plate_number, (int)$values->place);
+                    $this->flashMessage('Reservation was added');
+                    $this->redirect('Homepage:default');
+                }
+                else
+                {
+                    $this->flashMessage('Reservation already exists');
+                    $this->redirect('Homepage:default');
+                }
             } 
             catch (Exception $exc) 
             {
