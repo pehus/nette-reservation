@@ -138,12 +138,12 @@ final class HomepagePresenter extends BasePresenter
                 {
                     $this->reservationFacade->create($dateFrom, $dateTo, $values->plate_number, (int)$values->place);
                     $this->flashMessage('Reservation was added');
-                    $this->redirect('Homepage:default');
+                    //$this->redirect("Homepage:default");
                 }
                 else
                 {
                     $this->flashMessage('Reservation already exists');
-                    $this->redirect('Homepage:default');
+                    //$this->redirect("Homepage:default");
                 }
             } 
             catch (Exception $exc) 

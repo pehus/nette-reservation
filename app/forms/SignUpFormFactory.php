@@ -9,53 +9,52 @@ use Nette\Application\UI\Form;
 
 final class SignUpFormFactory
 {
-	use Nette\SmartObject;
+    use Nette\SmartObject;
 
-	const PASSWORD_MIN_LENGTH = 7;
+    const PASSWORD_MIN_LENGTH = 7;
 
-	/** @var FormFactory */
-	private $factory;
+    /** @var FormFactory */
+    private $factory;
 
-	/** @var Model\UserManager */
-	private $userManager;
-
-
-	public function __construct(FormFactory $factory, Model\UserManager $userManager)
-	{
-		$this->factory = $factory;
-		$this->userManager = $userManager;
-	}
+    /** @var Model\UserManager */
+    private $userManager;
 
 
-	/**
-	 * @return Form
-	 */
-	public function create(callable $onSuccess)
-	{
-		$form = $this->factory->create();
-		$form->addText('username', 'Pick a username:')
-			->setRequired('Please pick a username.');
+    public function __construct(FormFactory $factory, Model\UserManager $userManager)
+    {
+        $this->factory = $factory;
+        $this->userManager = $userManager;
+    }
 
-		$form->addEmail('email', 'Your e-mail:')
-			->setRequired('Please enter your e-mail.');
+    /**
+     * @return Form
+     */
+    public function create(callable $onSuccess)
+    {
+        $form = $this->factory->create();
+        $form->addText('username', 'Pick a username:')
+                ->setRequired('Please pick a username.');
 
-		$form->addPassword('password', 'Create a password:')
-			->setOption('description', sprintf('at least %d characters', self::PASSWORD_MIN_LENGTH))
-			->setRequired('Please create a password.')
-			->addRule($form::MIN_LENGTH, null, self::PASSWORD_MIN_LENGTH);
+        $form->addEmail('email', 'Your e-mail:')
+                ->setRequired('Please enter your e-mail.');
 
-		$form->addSubmit('send', 'Sign up');
+        $form->addPassword('password', 'Create a password:')
+                ->setOption('description', sprintf('at least %d characters', self::PASSWORD_MIN_LENGTH))
+                ->setRequired('Please create a password.')
+                ->addRule($form::MIN_LENGTH, null, self::PASSWORD_MIN_LENGTH);
 
-		$form->onSuccess[] = function (Form $form, $values) use ($onSuccess) {
-			try {
-				$this->userManager->add($values->username, $values->email, $values->password);
-			} catch (Model\DuplicateNameException $e) {
-				$form['username']->addError('Username is already taken.');
-				return;
-			}
-			$onSuccess();
-		};
+        $form->addSubmit('send', 'Sign up');
 
-		return $form;
-	}
+        $form->onSuccess[] = function (Form $form, $values) use ($onSuccess) {
+                try {
+                        $this->userManager->add($values->username, $values->email, $values->password);
+                } catch (Model\DuplicateNameException $e) {
+                        $form['username']->addError('Username is already taken.');
+                        return;
+                }
+                $onSuccess();
+        };
+
+        return $form;
+    }
 }

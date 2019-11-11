@@ -84,6 +84,7 @@ class ReservationFacade
      */
     public function delete($id): void
     {
+        //@todo:
         $reservation = $this->entityManager->find(Reservation::class, $id);
         $this->entityManager->remove($reservation);
         $this->entityManager->flush();

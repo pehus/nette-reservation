@@ -19,10 +19,10 @@ extensions:
 	annotations: Kdyby\Annotations\DI\AnnotationsExtension
 	doctrine: Kdyby\Doctrine\DI\OrmExtension
 
-database:
-	dsn: 'mysql:host=127.0.0.1;dbname=reservation'
-	user: 'root'
-	password: ''
+#database:
+#	dsn: 'mysql:host=127.0.0.1;dbname=reservation'
+#	user: 'root'
+#	password: ''
 
 doctrine:
 	user: root
@@ -40,5 +40,5 @@ services:
 
 	- App\Forms\FormFactory
 	- App\Forms\ReservationFormFactory
-	#- App\Forms\SignUpFormFactory
+
 	router: App\RouterFactory::createRouter
