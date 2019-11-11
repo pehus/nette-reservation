@@ -33,26 +33,31 @@ final class HomepagePresenter extends BasePresenter
      */
     public $reservationFormFactory;
     
+    
+    private $selectedDate;
+    
     /**
      * render default
      */
     public function renderDefault(): void
     {
-        $pagination = $page = $this->pagination();
-
+        $page = $this->getParameter('page'); 
+        
+        $pagination = $this->pagination($page);
+        $selectedDate = $this->selectedDate($pagination['next'], $page);
+                
         $this->template->prev = $pagination['prev'];
         $this->template->next = $pagination['next'];
-        $this->template->date = $pagination['selected_page'];
+        $this->template->date = $selectedDate;
+        $this->selectedDate = $selectedDate;
     }
     
     /**
      * pagination
      * @return array
      */
-    private function pagination(): array
-    {
-        $page = $this->getParameter('page');   
-  
+    private function pagination($page): array
+    {  
         if(is_numeric($page) && $page > 0)
         {
             $up = ($page + 1);
@@ -76,7 +81,6 @@ final class HomepagePresenter extends BasePresenter
         }
         
         return [
-            'selected_page' => $this->selectedDate($next, $page),
             'next' => $next,
             'prev' => $prev
         ];
@@ -89,7 +93,7 @@ final class HomepagePresenter extends BasePresenter
      * @return \Nette\Utils\DateTime
      */
     private function selectedDate($next, $page): DateTime
-    {        
+    {                
         $date = new DateTime();
         
         if($next > 1)
@@ -108,7 +112,10 @@ final class HomepagePresenter extends BasePresenter
      */
     protected function createComponentPlaces(): Components\Place\PlaceControl
     {
-        return new Components\Place\PlaceControl($this->placeFacade, $this->reservationFacade, $this->reservationFormFactory);
+        $placeControl = new Components\Place\PlaceControl($this->placeFacade, $this->reservationFacade, $this->reservationFormFactory);
+        $placeControl->setSelectedDate($this->selectedDate);
+        
+        return $placeControl;
     }
     
     /**

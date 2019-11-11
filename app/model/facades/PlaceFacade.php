@@ -26,24 +26,44 @@ class PlaceFacade
      
     /**
      * get places
-     * @param type $date
      * @return array
      */
     public function getPlaces($date = null): array
     {
-        return $this->places();
+        $arrayOccupiedPlaces = [];
+        if(!is_null($date))
+        {
+            $occupiedPlaces = $this->getOccupiedPlacesByDate($date);           
+
+            foreach($occupiedPlaces as $place)
+            {
+                $arrayOccupiedPlaces[] = $place['place'];
+            }
+        }
+        
+        return $this->places($arrayOccupiedPlaces);
     }
     
     /**
      * create places
+     * @param array $occupiedPlaces
      * @return array
      */
-    private function places(): array
+    private function places($occupiedPlaces): array
     {
         $places = [];
         for($i = 1; $i <= self::PLACES; $i++)
         {
-            $places[] = $i; 
+            $state = true;
+            if(in_array($i, $occupiedPlaces))
+            {
+                $state = false;
+            }
+            
+            $places[] = [
+                'place' => $i,
+                'is_free' => $state
+            ];
         }
         
         return $places;
@@ -76,6 +96,26 @@ class PlaceFacade
         }
         
         return true;
+    }
+    
+    /**
+     * get Occupied places by date
+     * @param Nette\Utils\DateTime $date
+     * @return array
+     */
+    public function getOccupiedPlacesByDate($date): array
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb->select('reservation_date.id, reservation_date.date, reservation.place')
+            ->from(Entities\Reservation::class, 'reservation')
+            ->innerJoin(Entities\ReservationDate::class, 'reservation_date')
+            ->where('reservation.id = reservation_date.reservationId')
+            ->andWhere('reservation_date.date = :date')
+            ->setParameters([
+                'date' => $date->format('Y-m-d')
+            ]);
+                
+        return $qb->getQuery()->getResult();
     }
     
 }

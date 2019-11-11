@@ -8,14 +8,26 @@ use Tracy\Debugger;
 
 class PlaceControl extends \App\Components\BaseControl
 {	        
-    /** @var Facades\HockeyFacade */
+    /** 
+     * @var Facades\HockeyFacade 
+     */
     public $placeFacade;
     
-    /**  @var Forms\ReservationFormFactory */
+    /**  
+     * @var Forms\ReservationFormFactory 
+     */
     public $reservationFormFactory;
 
-    /** @var Facades\ReservationFacade */
+    /** 
+     * @var Facades\ReservationFacade 
+     */
     public $reservationFacade;
+    
+    /**
+     * selected date
+     * @var type 
+     */
+    private $selectedDate;
     
     /**
      * @param Facades\PlaceFacade $placeFacade
@@ -32,6 +44,16 @@ class PlaceControl extends \App\Components\BaseControl
         $this->reservationFacade = $reservationFacade;
         $this->reservationFormFactory = $reservationFormFactory;
     }
+    
+    /**
+     * set selected date
+     * @param type $selectedDate
+     * @return void
+     */
+    public function setSelectedDate($selectedDate): void
+    {
+        $this->selectedDate = $selectedDate;
+    }
 
     /**
      * render place
@@ -42,7 +64,7 @@ class PlaceControl extends \App\Components\BaseControl
         $parameters = $this->getPresenter()->getParameters();
         $template = $this->template;
         $template->setFile(__DIR__ . '/place.latte');
-        $places = $this->placeFacade->getPlaces(null);
+        $places = $this->placeFacade->getPlaces($this->selectedDate);
         $template->places = $places;
         $template->render();
     }

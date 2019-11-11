@@ -2,13 +2,18 @@
     <tr>
         {var $counter = 1}
         {foreach $places as $key => $place}
-            <td class="free">
-                <a href="#" class="place" data-toggle="modal" data-target="#modal" data-place="{$place}">{$place}</a>
+            <td class="{if $place['is_free']}free{else}occupied{/if}">
+                {if $place['is_free']}
+                <a href="#" class="place" data-toggle="modal" data-target="#modal" data-place="{$place['place']}">{$place['place']}</a>
+                {else}
+                <span class="place">{$place['place']}</span>    
+                {/if}
+                
                 {if $counter >= 20}
-            </tr>
-            {var $counter = 0}
-        {/if}
-    </td>
+                    </tr>
+                    {var $counter = 0}
+                {/if}
+            </td>
     {php $counter++}
 {/foreach}    
 <tr>            

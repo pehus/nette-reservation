@@ -1,20 +1,17 @@
-.reservation {
-    border-color: #fff;
-    border: 1px;
+table.reservation tr td {
+    border: 1px solid #333;
 }
 
-.occupied {
-    background-color: red;
-    text-align: center;
+table.reservation tr td > a, span {
     padding: 5px;
+    text-align: center;
+    color: #fff;
 }
 
 .free {
     background-color: green;
-    text-align: center;
-    padding: 5px;
 }
 
-.free a, .occupied a {
-    color: #fff;
+.occupied {
+    background-color: red;
 }

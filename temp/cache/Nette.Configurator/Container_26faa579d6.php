@@ -393,7 +393,7 @@ class Container_26faa579d6 extends Nette\DI\Container
 
 	public function createService__74_App_Model_Facades_PlaceFacade(): App\Model\Facades\PlaceFacade
 	{
-		$service = new App\Model\Facades\PlaceFacade;
+		$service = new App\Model\Facades\PlaceFacade($this->getService('doctrine.default.entityManager'));
 		return $service;
 	}
 

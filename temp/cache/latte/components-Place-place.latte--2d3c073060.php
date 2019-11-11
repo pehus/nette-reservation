@@ -16,19 +16,35 @@ class Template2d3c073060 extends Latte\Runtime\Template
 		$counter = 1;
 		$iterations = 0;
 		foreach ($places as $key => $place) {
+			?>            <td class="<?php
+			if ($place['is_free']) {
+				?>free<?php
+			}
+			else {
+				?>occupied<?php
+			}
+?>">
+<?php
+			if ($place['is_free']) {
+				?>                <a href="#" class="place" data-toggle="modal" data-target="#modal" data-place="<?php
+				echo LR\Filters::escapeHtmlAttr($place['place']) /* line 7 */ ?>"><?php echo LR\Filters::escapeHtmlText($place['place']) /* line 7 */ ?></a>
+<?php
+			}
+			else {
+				?>                <span class="place"><?php echo LR\Filters::escapeHtmlText($place['place']) /* line 9 */ ?></span>    
+<?php
+			}
 ?>
-            <td class="free">
-                <a href="#" class="place" data-toggle="modal" data-target="#modal" data-place="<?php echo LR\Filters::escapeHtmlAttr($place) /* line 6 */ ?>"><?php
-			echo LR\Filters::escapeHtmlText($place) /* line 6 */ ?></a>
+                
 <?php
 			if ($counter >= 20) {
 ?>
-            </tr>
+                    </tr>
 <?php
 				$counter = 0;
 			}
 ?>
-    </td>
+            </td>
 <?php
 			$counter++;
 			$iterations++;
